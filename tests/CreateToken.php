@@ -11,8 +11,8 @@ use Dracarys\Jwt\Validation\Validator;
 use Dracarys\Jwt\Signer\OpenSSL;
 use Dracarys\Jwt\Signer\Key;
 
-$privateKey = file_get_contents(__DIR__ . '/private.pem');
-$publicKey = file_get_contents(__DIR__ . '/public.pem');
+$privateKey = file_get_contents(__DIR__ . '/private/private.pem');
+$publicKey = file_get_contents(__DIR__ . '/public/public.pem');
 
 $symmetric = Configuration::symmetric(new HmacSha256(), Key::secret(bin2hex(random_bytes(32))));
 $asymmetric = Configuration::asymmetric(new Sha256(), Key::openSSL(new OpenSSL($privateKey, $publicKey)));
