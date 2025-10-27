@@ -1,0 +1,22 @@
+{
+    "name": "pisopay-ivan/dracarys-jwt",
+    "description": "JsonWebToken",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Dracarys\\Jwt\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ivan Macabontoc"
+        }
+    ],
+    "require": {
+      "ext-http": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.4"
+    }
+}
