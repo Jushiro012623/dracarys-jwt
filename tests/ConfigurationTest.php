@@ -1,4 +1,6 @@
 <?php
+namespace Dracarys\Test;
+
 
 use Dracarys\Jwt\Signer\Hmac\Sha256;
 

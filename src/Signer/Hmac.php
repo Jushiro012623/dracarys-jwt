@@ -2,11 +2,12 @@
 
 namespace Dracarys\Jwt\Signer;
 
-use Dracarys\Jwt\Contracts\Hmac as HmacInterface;
+use Dracarys\Jwt\Contracts\Signer;
+use OpenSSLAsymmetricKey;
 
-abstract class Hmac implements HmacInterface
+abstract class Hmac implements Signer
 {
-    public function sign(string $data, string $key): string
+    public function sign(string $data, string|OpenSSLAsymmetricKey $key): string
     {
         return hash_hmac($this->algorithm(), $data, $key, true);
     }

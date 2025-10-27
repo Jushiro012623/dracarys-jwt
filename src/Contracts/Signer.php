@@ -1,11 +1,10 @@
 <?php
 
 namespace Dracarys\Jwt\Contracts;
-
+use OpenSSLAsymmetricKey;
 interface Signer
 {
-    public function algorithm(): string;
+    public function sign(string $data, string|OpenSSLAsymmetricKey  $key): string;
 
-    public function id(): string;
-
+    public function verify(string $data, string|OpenSSLAsymmetricKey  $key, string $signature): bool;
 }

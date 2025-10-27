@@ -14,8 +14,7 @@ readonly final class Builder implements BuilderInterface
         private array         $payload = [],
         private array         $headers = [],
     )
-    {
-    }
+    {}
 
     public static function fromConfig(Configuration $config): self
     {

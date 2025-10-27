@@ -3,10 +3,10 @@
 namespace Dracarys\Jwt\Validation;
 
 use DateTimeInterface;
-use Dracarys\Jwt\Contracts\Signer;
+use Dracarys\Jwt\Contracts\SignerAlgorithm;
 use Dracarys\Jwt\Contracts\Token;
 use Exception;
-
+use OpenSSLAsymmetricKey;
 final readonly class Validator
 {
     private function __construct(
@@ -40,14 +40,14 @@ final readonly class Validator
         return new self($token);
     }
 
-    public function signedWith(Signer $signer, string $key): self
+    public function signedWith(SignerAlgorithm $signer, string|OpenSSLAsymmetricKey  $key): self
     {
         $errors = $this->errors;
 
         $alg = $this->token->headers()->get('alg');
 
         if ($alg !== $signer->id()) {
-            $errors[] = "Signer mismatch: expected {$signer->id()}, got {$alg}";
+            $errors[] = "SignerAlgorithm mismatch: expected {$signer->id()}, got {$alg}";
         }
 
         $verified = $signer->verify(

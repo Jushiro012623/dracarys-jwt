@@ -6,34 +6,36 @@ use Dracarys\Jwt\Contracts\Decoder as DecoderInterface;
 use Dracarys\Jwt\Contracts\Encoder as EncoderInterface;
 use Dracarys\Jwt\Contracts\Token;
 use Dracarys\Jwt\Contracts\TokenData;
-use Dracarys\Jwt\Contracts\Signer;
+use Dracarys\Jwt\Contracts\SignerAlgorithm;
 use Dracarys\Jwt\Helpers\Decoder;
 use Dracarys\Jwt\Helpers\Encoder;
+use Dracarys\Jwt\Signer\Key;
+use Dracarys\Jwt\Signer\OpenSSL;
 use Dracarys\Jwt\Token\Builder;
-use Dracarys\Jwt\Token\Jwt;
 use Dracarys\Jwt\Token\Parser;
 use Dracarys\Jwt\Validation\Validator;
+use OpenSSLAsymmetricKey;
 
 readonly class Configuration
 {
     private function __construct(
-        private Signer           $signer,
-        private string           $signingKey,
-        private string           $verificationKey,
-        private DecoderInterface $decoder = new Decoder(),
-        private EncoderInterface $encoder = new Encoder()
+        private SignerAlgorithm             $signer,
+        private string|OpenSSLAsymmetricKey $signingKey,
+        private string|OpenSSLAsymmetricKey $verificationKey,
+        private DecoderInterface            $decoder = new Decoder(),
+        private EncoderInterface            $encoder = new Encoder()
     )
     {
     }
 
-    public static function symmetric(Signer $signer, string $key): Configuration
+    public static function symmetric(SignerAlgorithm $signer, Key $key): Configuration
     {
-        return new self($signer, $key, $key);
+        return new self($signer, $key->signingKey(), $key->verifyingKey());
     }
 
-    public static function asymmetric(Signer $signer, string $publicKey, string $privateKey): Configuration
+    public static function asymmetric(SignerAlgorithm $signer, Key $key): Configuration
     {
-        return new self($signer, $publicKey, $privateKey);
+        return new self($signer, $key->signingKey(), $key->verifyingKey());
     }
 
     public function setDecoder(DecoderInterface $decoder): Configuration
@@ -56,17 +58,17 @@ readonly class Configuration
         return $this->encoder;
     }
 
-    public function signer(): Signer
+    public function signer(): SignerAlgorithm
     {
         return $this->signer;
     }
 
-    public function signingKey(): string
+    public function signingKey(): string|OpenSSLAsymmetricKey
     {
         return $this->signingKey;
     }
 
-    public function verificationKey(): string
+    public function verificationKey(): string|OpenSSLAsymmetricKey
     {
         return $this->verificationKey;
     }
