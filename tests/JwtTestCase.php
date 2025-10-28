@@ -1,6 +1,7 @@
 <?php
 namespace Dracarys\Test;
 
+use Dracarys\Jwt\Signer\Symmetric;
 use PHPUnit\Framework\TestCase;
 use Dracarys\Jwt\Signer\OpenSSL;
 use Dracarys\Jwt\Signer\Hmac\Sha256;
@@ -18,10 +19,10 @@ abstract class JwtTestCase extends TestCase
     {
         parent::setUp();
 
-        $privateKey = file_get_contents(__DIR__ . '/private.pem');
-        $publicKey = file_get_contents(__DIR__ . '/public.pem');
+        $privateKey = file_get_contents(__DIR__ . '/private/private.pem');
+        $publicKey = file_get_contents(__DIR__ . '/public/public.pem');
 
-        $this->symmetric = \Dracarys\Jwt\Configuration::symmetric(new Sha256(), 'secret');
+        $this->symmetric = \Dracarys\Jwt\Configuration::symmetric(new Sha256(), new Symmetric('secret'));
         $this->asymmetric = \Dracarys\Jwt\Configuration::asymmetric(new RsaSha256(), new OpenSSL($privateKey, $publicKey));
 
         $this->claims = new TokenData([

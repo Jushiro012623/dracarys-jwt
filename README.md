@@ -103,9 +103,8 @@ $token = Builder::fromConfig($config)
 
 // Parse a token string
 $parser = new Parser();
-$parsedToken = $parser->parse('eyyJ0eXAiOiJKV1QiLC...');
-
 try {
+    $parsedToken = $parser->parse('eyyJ0eXAiOiJKV1QiLC...');
 }catch (Exception $e) {
     echo "Unable to parse token string " . $e->getMessage();
 }
@@ -175,6 +174,39 @@ $validator = Validator::fromToken($token)
     ->custom($customCallback);        // Custom validation logic
 ```
 
+### Token Creation, Parsing, and Validation from Configuration
+Create tokens with claims and headers:
+```php
+    $config = Configuration::symmetric(new Sha256(), new Symmetric($secretKey));
+    
+    //Issuing a token 
+    $claims = new TokenData([
+        'foo' => 'bar'
+        ...
+    ]);
+    
+    $headers = new TokenData([...]);
+    
+    $token = $config->createToken($claims, $headers)->toString();
+    
+    $parsedToken = $config->parseToken($token);
+    
+    //Validate the token
+    $validator = Validator::fromToken($parsedToken)
+        ...
+        ->permittedFor('https://your-app.com')
+        
+     try {
+        $validator->assert();
+        echo "Token is valid!";
+    } catch (TokenValidationException $e) {
+        echo "Token validation failed: " . $e->getMessage();
+    }
+     
+        
+     
+
+```
 ### Standard JWT Claims
 The library supports all standard JWT claims:
 - iss (Issuer): Who issued the token

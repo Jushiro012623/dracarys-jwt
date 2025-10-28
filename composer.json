@@ -5,7 +5,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Dracarys\\Jwt\\": "src/"
+            "Dracarys\\Jwt\\": "src/",
+            "Dracarys\\Test\\": "tests/"
         }
     },
     "homepage": "https://github.com/jushiro012623/dracarys-jwt",
