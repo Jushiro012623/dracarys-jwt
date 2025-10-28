@@ -1,5 +1,5 @@
 {
-    "name": "ivan.devx/dracarys-jwt",
+    "name": "dracarys/jwt",
     "description": "A Lightweight PHP JSON Web Token Library",
     "type": "library",
     "license": "MIT",
