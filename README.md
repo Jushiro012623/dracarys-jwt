@@ -25,7 +25,7 @@ composer require dracarys/jwt
 
 ## Requirements
 
-- PHP 8.3+
+- PHP 8.0+
 
 # Quick Start
 
