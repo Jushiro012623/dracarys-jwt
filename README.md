@@ -71,7 +71,7 @@ $token = Builder::fromConfig($config)
 echo $token->toString(); // "eyyJ0eXAiOiJKV1QiLC..."
 ```
 
-## Symmetric Token Issuing
+## Asymmetric Token Issuing
 
 ```php
 <?php
