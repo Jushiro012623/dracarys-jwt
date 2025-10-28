@@ -175,7 +175,7 @@ $validator = Validator::fromToken($token)
 ```
 
 ### Token Creation, Parsing, and Validation from Configuration
-Create tokens with claims and headers:
+The library provides a fluent API for creating, parsing, and validating tokens with a single configuration:
 ```php
     $config = Configuration::symmetric(new Sha256(), new Symmetric($secretKey));
     
