@@ -6,7 +6,7 @@ RSA) signing algorithms.
 
 ## Features
 
-- ✅ **Modern PHP**: Requires PHP 8.3+ with full type safety
+- ✅ **Modern PHP**: Requires PHP 8.0+ with full type safety
 - ✅ **Multiple Algorithms**: Support for HMAC SHA-256 and RSA SHA-256 signing
 - ✅ **Symmetric & Asymmetric**: Both HMAC (shared secret) and RSA (public/private key) encryption
 - ✅ **Token Validation**: Comprehensive validation with custom rules
