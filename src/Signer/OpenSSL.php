@@ -2,6 +2,7 @@
 
 namespace Dracarys\Jwt\Signer;
 
+use Dracarys\Jwt\Exceptions\InvalidKeyException;
 use OpenSSLAsymmetricKey;
 
 class OpenSSL extends Key
@@ -22,7 +23,7 @@ class OpenSSL extends Key
 
         $key = openssl_pkey_get_private($this->privateKey, $this->passphrase);
         if (!$key) {
-            throw new \InvalidArgumentException('Invalid private key.');
+            throw new InvalidKeyException('Invalid private key.');
         }
         return $this->privateKeyObj = $key;
     }
@@ -33,7 +34,7 @@ class OpenSSL extends Key
 
         $key = openssl_pkey_get_public($this->publicKey);
         if (!$key) {
-            throw new \InvalidArgumentException('Invalid public key.');
+            throw new InvalidKeyException('Invalid public key.');
         }
         return $this->publicKeyObj = $key;
     }

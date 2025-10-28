@@ -5,7 +5,7 @@ namespace Dracarys\Jwt\Validation;
 use DateTimeInterface;
 use Dracarys\Jwt\Contracts\SignerAlgorithm;
 use Dracarys\Jwt\Contracts\Token;
-use Exception;
+use Dracarys\Jwt\Exceptions\TokenValidationException;
 use OpenSSLAsymmetricKey;
 final readonly class Validator
 {
@@ -19,7 +19,7 @@ final readonly class Validator
     public function assert(): void
     {
         if (!empty($this->errors)) {
-            throw new Exception(
+            throw new TokenValidationException(
                 "Token validation failed:\n" . implode("\n", $this->errors)
             );
         }

@@ -4,6 +4,7 @@ namespace Dracarys\Jwt\Token;
 
 use Dracarys\Jwt\Contracts\Decoder as DecoderInterface;
 use Dracarys\Jwt\Contracts\Token;
+use Dracarys\Jwt\Exceptions\InvalidTokenException;
 use Dracarys\Jwt\Helpers\Decoder;
 
 readonly class Parser
@@ -29,7 +30,7 @@ readonly class Parser
     {
         $parts = explode('.', $jwt);
         if (count($parts) !== 3) {
-            throw new \Exception('Token structure invalid');
+            throw new InvalidTokenException('Token structure invalid');
         }
         return $parts;
     }
@@ -37,7 +38,7 @@ readonly class Parser
     private function decodePart(string $type, string $data): array
     {
         if (trim($data) === '') {
-            throw new \Exception("Token is missing the {$type} part");
+            throw new InvalidTokenException("Token is missing the {$type} part");
         }
 
         $decoded = $this->decoder->json(
@@ -45,7 +46,7 @@ readonly class Parser
         );
 
         if (!is_array($decoded)) {
-            throw new \Exception("Token {$type} part is not valid JSON");
+            throw new InvalidTokenException("Token {$type} part is not valid JSON");
         }
 
         return $decoded;

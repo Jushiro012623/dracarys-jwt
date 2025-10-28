@@ -1,6 +1,6 @@
 {
     "name": "pisopay-ivan/dracarys-jwt",
-    "description": "JsonWebToken",
+    "description": "A Lightweight PHP JSON Web Token Library",
     "type": "library",
     "license": "MIT",
     "autoload": {
