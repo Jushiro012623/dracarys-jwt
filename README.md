@@ -20,7 +20,7 @@ RSA) signing algorithms.
 Install via Composer:
 
 ```bash
-composer require pisopay-ivan/dracarys-jwt
+composer require dracarys/jwt
 ```
 
 ## Requirements
