@@ -189,10 +189,10 @@ The library provides a fluent API for creating, parsing, and validating tokens w
     
     $token = $config->createToken($claims, $headers)->toString();
     
-    $parsedToken = $config->parseToken($token);
+    $parsedToken = $config->parser()->parse($token);
     
     //Validate the token
-    $validator = Validator::fromToken($parsedToken)
+    $validator = $config->validator($parsedToken)
         ...
         ->permittedFor('https://your-app.com')
         

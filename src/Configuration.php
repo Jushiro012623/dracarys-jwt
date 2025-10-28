@@ -7,6 +7,7 @@ use Dracarys\Jwt\Contracts\Encoder as EncoderInterface;
 use Dracarys\Jwt\Contracts\Token;
 use Dracarys\Jwt\Contracts\TokenData;
 use Dracarys\Jwt\Contracts\SignerAlgorithm;
+use Dracarys\Jwt\Contracts\UnencryptedToken;
 use Dracarys\Jwt\Helpers\Decoder;
 use Dracarys\Jwt\Helpers\Encoder;
 use Dracarys\Jwt\Signer\Key;
@@ -83,7 +84,7 @@ readonly class Configuration
         return new Parser($this->decoder);
     }
 
-    public function validator(Token $token): Validator
+    public function validator(UnencryptedToken $token): Validator
     {
         return Validator::fromToken($token);
     }
