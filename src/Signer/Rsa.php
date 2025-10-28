@@ -4,6 +4,7 @@ namespace Dracarys\Jwt\Signer;
 
 use Dracarys\Jwt\Contracts\Signer;
 use OpenSSLAsymmetricKey;
+use PHPUnit\Exception;
 
 abstract class Rsa implements Signer
 {
@@ -23,12 +24,16 @@ abstract class Rsa implements Signer
         try {
             $signature = '';
             if (!openssl_sign($data, $signature, $privateKey, $this->algorithm())) {
-                throw new \RuntimeException('Failed to sign data: ' . openssl_error_string());
+                throw new \RuntimeException(sprintf(
+                    'Failed to sign data using %s: %s',
+                    $this->algorithm(),
+                    openssl_error_string()
+                ));
             }
             return $signature;
         } finally {
             if ($privateKey instanceof \OpenSSLAsymmetricKey) {
-                unset($publicKey);
+                unset($privateKey);
             }
         }
 

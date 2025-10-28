@@ -3,30 +3,11 @@
 namespace Dracarys\Jwt\Signer;
 
 use OpenSSLAsymmetricKey;
-
-readonly class Key
+use Dracarys\Jwt\Contracts\Key as KeyInterface;
+abstract class Key implements KeyInterface
 {
-    private function __construct(private string|OpenSSLAsymmetricKey $signingKey = '', private string|OpenSSLAsymmetricKey $verifyingKey = '')
-    {
-    }
+    public abstract function signingKey(): string|OpenSSLAsymmetricKey;
+    public abstract function verifyingKey(): string|OpenSSLAsymmetricKey;
 
-    public static function secret($key): self
-    {
-        return new self($key, $key);
-    }
 
-    public static function openSSL(OpenSSL $openSSL): self
-    {
-        return new self($openSSL->getPrivateKey(), $openSSL->getPublicKey());
-    }
-
-    public function signingKey(): string|OpenSSLAsymmetricKey
-    {
-        return $this->signingKey;
-    }
-
-    public function verifyingKey(): string|OpenSSLAsymmetricKey
-    {
-        return $this->verifyingKey;
-    }
 }

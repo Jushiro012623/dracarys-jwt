@@ -9,13 +9,15 @@ use Dracarys\Jwt\Token\TokenData;
 use Dracarys\Jwt\Token\Parser;
 use Dracarys\Jwt\Validation\Validator;
 use Dracarys\Jwt\Signer\OpenSSL;
-use Dracarys\Jwt\Signer\Key;
+use Dracarys\Jwt\Signer\Symmetric;
 
 $privateKey = file_get_contents(__DIR__ . '/private/private.pem');
 $publicKey = file_get_contents(__DIR__ . '/public/public.pem');
 
-$symmetric = Configuration::symmetric(new HmacSha256(), Key::secret(bin2hex(random_bytes(32))));
-$asymmetric = Configuration::asymmetric(new Sha256(), Key::openSSL(new OpenSSL($privateKey, $publicKey)));
+$secretKey = file_get_contents(__DIR__ . '/private/key.txt');
+
+$symmetric = Configuration::symmetric(new HmacSha256(), new Symmetric($secretKey));
+$asymmetric = Configuration::asymmetric(new Sha256(), new OpenSSL($privateKey, $publicKey));
 
 function createToken($config)
 {
@@ -52,7 +54,6 @@ function verifyToken($token, $config)
         ->relatedTo(1234567890);
 
     !empty($validator->errors()) && var_dump($validator->errors());
-    echo $validator->validate() ? 'Token is valid' . PHP_EOL : 'Token is invalid' . PHP_EOL;
 
     try {
         $validator->assert();
@@ -68,8 +69,12 @@ $symmetricToken = createToken($symmetric);
 $parseAsymmetricToken = parseToken($asymmetricToken);
 $parseSymmetricToken = parseToken($symmetricToken);
 
+
 verifyToken($parseAsymmetricToken, $asymmetric);
 verifyToken($parseSymmetricToken, $symmetric);
 
-echo "ASYMMETRIC TOKEN: " . $asymmetricToken->toString() . PHP_EOL;
-echo "SYMMETRIC TOKEN: " . $symmetricToken->toString() . PHP_EOL;
+
+echo PHP_EOL;
+echo "ASYMMETRIC TOKEN: " . "\033[34m{$asymmetricToken->toString()}\033[0m" . PHP_EOL;
+echo PHP_EOL;
+echo "SYMMETRIC TOKEN: " . "\033[34m{$symmetricToken->toString()}\033[0m" . PHP_EOL;

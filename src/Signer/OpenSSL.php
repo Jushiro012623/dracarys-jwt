@@ -4,34 +4,38 @@ namespace Dracarys\Jwt\Signer;
 
 use OpenSSLAsymmetricKey;
 
-readonly class OpenSSL
+class OpenSSL extends Key
 {
+    private ?OpenSSLAsymmetricKey $privateKeyObj = null;
+    private ?OpenSSLAsymmetricKey $publicKeyObj = null;
 
     public function __construct(
-        private ?string $privateKey,
-        private ?string $publicKey,
-        private string $passphrase = '')
+        private readonly ?string $privateKey,
+        private readonly ?string $publicKey,
+        private readonly string  $passphrase = '')
     {
-
     }
 
-    public function getPrivateKey(): OpenSSLAsymmetricKey
+    public function signingKey(): OpenSSLAsymmetricKey
     {
-        $privateKey = openssl_pkey_get_private($this->privateKey, $this->passphrase);
+        if ($this->privateKeyObj) return $this->privateKeyObj;
 
-        if (!$privateKey) {
+        $key = openssl_pkey_get_private($this->privateKey, $this->passphrase);
+        if (!$key) {
             throw new \InvalidArgumentException('Invalid private key.');
         }
-
-        return $privateKey;
+        return $this->privateKeyObj = $key;
     }
 
-    public function getPublicKey(): OpenSSLAsymmetricKey
+    public function verifyingKey(): OpenSSLAsymmetricKey
     {
-        $publicKey = openssl_pkey_get_public($this->publicKey);
-        if (!$publicKey) {
+        if ($this->publicKeyObj) return $this->publicKeyObj;
+
+        $key = openssl_pkey_get_public($this->publicKey);
+        if (!$key) {
             throw new \InvalidArgumentException('Invalid public key.');
         }
-        return $publicKey;
+        return $this->publicKeyObj = $key;
     }
+
 }
