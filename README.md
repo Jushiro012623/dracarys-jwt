@@ -109,6 +109,8 @@ try {
     echo "Unable to parse token string " . $e->getMessage();
 }
 ```
+
+## Parsing and Validating Token
 ```php
 <?php
 
@@ -221,7 +223,7 @@ The library supports all standard JWT claims:
 ### HMAC (Symmetric)
 - Dracarys\Jwt\Signer\Hmac\Sha256
 ### RSA (Asymmetric)
-### Dracarys\Jwt\Signer\Rsa\Sha256
+- Dracarys\Jwt\Signer\Rsa\Sha256
 
 ## Security Considerations
 1. **Keep your keys secure**: Never expose private keys or secrets in your code
