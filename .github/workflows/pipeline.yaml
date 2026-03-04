@@ -17,14 +17,11 @@ jobs:
           php-version: 8.4
           extensions: openssl, mbstring, intl
 
-      - name: Write private key
+      - name: Generate keys
         run: |
           mkdir -p tests/keys
-          printf "%s\n" "$JWT_PRIVATE_KEY" > tests/keys/private.pem
-
-      - name: Write public key
-        run: |
-          printf "%s\n" "$JWT_PUBLIC_KEY" > tests/keys/public.pem
+          openssl genpkey -algorithm RSA -out tests/keys/private.pem -pkeyopt rsa_keygen_bits:2048
+          openssl rsa -pubout -in tests/keys/private.pem -out tests/keys/public.pem
 
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
