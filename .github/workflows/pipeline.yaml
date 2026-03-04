@@ -1,0 +1,30 @@
+name: Ci Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          extensions: openssl, mbstring, intl
+
+      - name: Write private key
+        run: echo "$JWT_PRIVATE_KEY" > tests/keys/private.pem
+
+      - name: Write public key
+        run: echo "$JWT_PUBLIC_KEY" > tests/keys/public.pem
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run tests
+        run: composer test
