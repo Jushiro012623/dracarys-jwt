@@ -19,8 +19,8 @@ abstract class JwtTestCase extends TestCase
     {
         parent::setUp();
 
-        $privateKey = file_get_contents(__DIR__ . '/private/private.pem');
-        $publicKey = file_get_contents(__DIR__ . '/public/public.pem');
+        $privateKey = file_get_contents(__DIR__ . '/keys/private.pem');
+        $publicKey = file_get_contents(__DIR__ . '/keys/public.pem');
 
         $this->symmetric = \Dracarys\Jwt\Configuration::symmetric(new Sha256(), new Symmetric('secret'));
         $this->asymmetric = \Dracarys\Jwt\Configuration::asymmetric(new RsaSha256(), new OpenSSL($privateKey, $publicKey));

@@ -2,6 +2,7 @@
 namespace Dracarys\Test;
 
 
+use Dracarys\Jwt\Configuration;
 use Dracarys\Jwt\Contracts\UnencryptedToken;
 use Dracarys\Jwt\Signer\Hmac\Sha256;
 use Dracarys\Jwt\Signer\Symmetric;
@@ -10,10 +11,12 @@ use PHPUnit\Framework\TestCase;
 
 class ConfigurationTest extends TestCase
 {
+    protected Configuration $symmetric;
+
     public function setUp(): void
     {
         parent::setUp();
-        $this->symmetric = \Dracarys\Jwt\Configuration::symmetric(new Sha256(), new Symmetric('secret'));
+        $this->symmetric = Configuration::symmetric(new Sha256(), new Symmetric('secret'));
     }
 
     public function testSignerIsConfiguredCorrectly()

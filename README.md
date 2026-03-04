@@ -82,7 +82,7 @@ use Dracarys\Jwt\Signer\OpenSSL;
 
 // Load your RSA keys
 $privateKey = file_get_contents('/path/to/private.pem');
-$publicKey = file_get_contents('/path/to/public.pem');
+$publicKey = file_get_contents('/path/to/keys.pem');
 
 // Configuration with RSA keys
 $config = Configuration::asymmetric(

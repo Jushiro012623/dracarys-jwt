@@ -41,7 +41,7 @@ abstract class Rsa implements Signer
     }
 
     /**
-     * Verifies the signature using RSA public key
+     * Verifies the signature using RSA keys key
      *
      * @throws InvalidKeyException If the key is invalid
      * @throws \RuntimeException If verification operation fails
@@ -50,7 +50,7 @@ abstract class Rsa implements Signer
     {
         $publicKey = is_string($key) ? openssl_pkey_get_public($key) : $key;
         if (!$publicKey) {
-            throw new InvalidKeyException('Invalid public key: ' . openssl_error_string());
+            throw new InvalidKeyException('Invalid keys key: ' . openssl_error_string());
         }
 
         try {

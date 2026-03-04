@@ -26,6 +26,17 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^12.4"
+    },
+    "scripts": {
+        "setup": [
+            "composer install",
+            "php -r \"if (!file_exists('tests/keys/private.pem')) { mkdir('tests/keys', 0777, true); exec('openssl genpkey -algorithm RSA -out tests/keys/private.pem -pkeyopt rsa_keygen_bits:2048'); exec('openssl rsa -pubout -in tests/keys/private.pem -out tests/keys/public.pem'); }\""
+        ],
+        "dev": "composer install --dev",
+        "lint": "phpcs --standard=PSR2 src/",
+        "fix": "phpcbf --standard=PSR2 src/",
+        "test-coverage": "phpunit --coverage-html=coverage",
+        "test": "phpunit"
     }
 }
 

@@ -34,7 +34,7 @@ class OpenSSL extends Key
 
         $key = openssl_pkey_get_public($this->publicKey);
         if (!$key) {
-            throw new InvalidKeyException('Invalid public key.');
+            throw new InvalidKeyException('Invalid keys key.');
         }
         return $this->publicKeyObj = $key;
     }

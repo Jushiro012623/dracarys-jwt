@@ -12,7 +12,7 @@ use Dracarys\Jwt\Signer\OpenSSL;
 use Dracarys\Jwt\Signer\Symmetric;
 
 $privateKey = file_get_contents(__DIR__ . '/private/private.pem');
-$publicKey = file_get_contents(__DIR__ . '/public/public.pem');
+$publicKey = file_get_contents(__DIR__ . '/keys/public.pem');
 
 $secretKey = file_get_contents(__DIR__ . '/private/key.txt');
 
